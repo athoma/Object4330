@@ -21,6 +21,10 @@ public class Task2 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
+    boolean twentyfive = false;
+    boolean fifty = false;
+    boolean seventyfive = false;
+    boolean done = false;
     
     private ArrayList<Notification> notifications = new ArrayList<>();
     
@@ -39,6 +43,23 @@ public class Task2 extends Thread {
                 doNotify("It happened in Task2: " + i);
             }
             
+            if (!twentyfive && i > (maxValue*0.25)) {
+                    System.out.println("25% complete");
+                    twentyfive = true;
+                }
+                if (!fifty && i > (maxValue*0.50)) {
+                    System.out.println("50% complete");
+                    fifty = true;
+                }
+                if (!seventyfive && i > (maxValue*0.75)) {
+                    System.out.println("75% complete");
+                    seventyfive = true;
+                }
+                if (!done && i > (maxValue*0.98)) {
+                    System.out.println("100% complete");
+                    done = true;
+                }
+                
             if (exit) {
                 return;
             }

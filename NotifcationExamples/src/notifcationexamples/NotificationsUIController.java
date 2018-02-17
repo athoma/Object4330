@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -28,9 +29,22 @@ public class NotificationsUIController implements Initializable, Notifiable {
     @FXML
     private TextArea textArea;
     
+    @FXML
+    private Button button1;
+    
+    @FXML
+    private Button button2;
+    
+    @FXML
+    private Button button3;
+    
     private Task1 task1;
     private Task2 task2;
     private Task3 task3;
+    
+    private Integer switch1;
+    private Integer switch2;
+    private Integer switch3;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,11 +63,17 @@ public class NotificationsUIController implements Initializable, Notifiable {
     
     @FXML
     public void startTask1(ActionEvent event) {
-        System.out.println("start task 1");
+        System.out.println("Start task 1");
         if (task1 == null) {
             task1 = new Task1(2147483647, 1000000);
             task1.setNotificationTarget(this);
             task1.start();
+         button1.setText("Stop 1");
+        } else {
+            System.out.println("Stopped task 1");
+            task1.end();
+            button1.setText("Task 1");
+            task1 = null;
         }
     }
     
@@ -67,7 +87,7 @@ public class NotificationsUIController implements Initializable, Notifiable {
     
     @FXML
     public void startTask2(ActionEvent event) {
-        System.out.println("start task 2");
+        System.out.println("Start task 2");
         if (task2 == null) {
             task2 = new Task2(2147483647, 1000000);
             task2.setOnNotification((String message) -> {
@@ -75,20 +95,35 @@ public class NotificationsUIController implements Initializable, Notifiable {
             });
             
             task2.start();
-        }        
+            button2.setText("Stop 2");
+        }   else {
+            System.out.println("Stopped task 2");
+            task2.end();
+            button2.setText("Task 2");
+            task2 = null;
+        }
     }
     
     @FXML
     public void startTask3(ActionEvent event) {
         System.out.println("start task 3");
         if (task3 == null) {
-            task3 = new Task3(2147483647, 1000000);
-            // this uses a property change listener to get messages
-            task3.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-                textArea.appendText((String)evt.getNewValue() + "\n");
-            });
             
-            task3.start();
+                task3 = new Task3(2147483647, 1000000);
+                // this uses a property change listener to get messages
+                task3.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+                    textArea.appendText((String)evt.getNewValue() + "\n");
+                });
+
+                task3.start();
+                button3.setText("Stop 3");
+            
+        } else {
+            System.out.println("Stopped task 3");
+            task3.end();
+            button3.setText("Task 3");
+            task3 = null;
         }
+        
     } 
 }
